@@ -9,9 +9,11 @@
 import Foundation
 import XCGLogger
 
+let logger = XCGLogger(identifier: "mainLogger", includeDefaultDestinations: false)
+
 class ApplicationManager: NSObject {
     
-    static func applicationConfigInit(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+    class func applicationConfigInit(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         //MARK: Logger should be initialised at FIRST
         initLogger()
         initServices(application, launchOptions: launchOptions)
@@ -22,7 +24,7 @@ class ApplicationManager: NSObject {
         setupAppearance()
     }
     
-    private static func initServices(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+    private class func initServices(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
 //        Analytics.initServices(launchOptions: launchOptions)
 //        RateManager.setupRate()
 //        let _ = NamaManager.share()
@@ -38,19 +40,51 @@ class ApplicationManager: NSObject {
 //        #endif
     }
     
-    private static func initLogger() {
-        let _ = log
+    private class func initLogger() {
+        let systemDestination = AppleSystemLogDestination(identifier: "mainLogger.systemDestination")
+        
+        systemDestination.outputLevel = .debug
+        systemDestination.showLogIdentifier = false
+        systemDestination.showFunctionName = true
+        systemDestination.showThreadName = true
+        systemDestination.showLevel = true
+        systemDestination.showFileName = true
+        systemDestination.showLineNumber = true
+        systemDestination.showDate = true
+        
+        logger.add(destination: systemDestination)
+        
+        let cachePath = FileManager.default.urls(for: .cachesDirectory,
+                                                 in: .userDomainMask)[0]
+        let logURL = cachePath.appendingPathComponent("log.txt")
+        let fileDestination = FileDestination(writeToFile: logURL, identifier: "mainLogger.fileDestination")
+        
+        fileDestination.outputLevel = .debug
+        fileDestination.showLogIdentifier = false
+        fileDestination.showFunctionName = true
+        fileDestination.showThreadName = true
+        fileDestination.showLevel = true
+        fileDestination.showFileName = true
+        fileDestination.showLineNumber = true
+        fileDestination.showDate = true
+        
+        fileDestination.logQueue = XCGLogger.logQueue
+        
+        logger.add(destination: fileDestination)
+        
+        logger.logAppDetails()
+
     }
     
-    private static func initPersistentData() {
+    private class func initPersistentData() {
         
     }
     
-    private static func initUserDefaults() {
+    private class func initUserDefaults() {
         
     }
     
-    private static func setupAppearance() {
+    private class func setupAppearance() {
         
     }
     
