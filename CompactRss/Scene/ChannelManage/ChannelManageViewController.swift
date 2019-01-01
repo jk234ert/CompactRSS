@@ -17,10 +17,26 @@ class ChannelManageViewController: BaseUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Feed Channels"
         tableView = UITableView(frame: .zero)
         view.addSubview(tableView!)
         tableView?.edgesToSuperview()
         viewModel = ChannelManagerViewModel(tableView: tableView!)
         
+        setAddChannelBarButtonItem()
+    }
+    
+    private func setAddChannelBarButtonItem() {
+        let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonItemClicked(sender:)))
+        navigationItem.rightBarButtonItem = addBarButtonItem
+    }
+    
+    @objc
+    private func addBarButtonItemClicked(sender: UIBarButtonItem) {
+        let vc = AddNewFeedViewController.init(nibName: "AddNewFeedViewController", bundle: nil)
+        vc.addedNewChannelBlock = { channel in
+            self.viewModel?.addNewChannel(channel)
+        }
+        navigationController?.pushViewController(vc)
     }
 }

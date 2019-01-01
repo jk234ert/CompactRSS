@@ -8,6 +8,7 @@
 
 import Foundation
 import XCGLogger
+import SwifterSwift
 
 let logger = XCGLogger(identifier: "mainLogger", includeDefaultDestinations: false)
 
@@ -85,7 +86,9 @@ class ApplicationManager: NSObject {
     }
     
     private class func setupAppearance() {
-        
+        UINavigationBar.appearance().tintColor = UIColor(hex: 0x3E2D1F)
+        UINavigationBar.appearance().barTintColor = UIColor(hex: 0xCAB77D)
+        UINavigationBar.appearance().isTranslucent = false
     }
     
 }

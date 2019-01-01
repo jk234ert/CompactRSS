@@ -20,6 +20,11 @@
 		83012D1721DA2FB200FE7DB5 /* MainViewGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83012D1621DA2FB200FE7DB5 /* MainViewGridLayout.swift */; };
 		83012D1A21DA341200FE7DB5 /* ChannelManageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83012D1921DA341200FE7DB5 /* ChannelManageViewController.swift */; };
 		83012D1D21DA348C00FE7DB5 /* ChannelManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83012D1C21DA348C00FE7DB5 /* ChannelManagerViewModel.swift */; };
+		83012D2021DB387D00FE7DB5 /* SaveChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83012D1F21DB387D00FE7DB5 /* SaveChannelModel.swift */; };
+		83012D2421DB439800FE7DB5 /* AddNewFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83012D2221DB439800FE7DB5 /* AddNewFeedViewController.swift */; };
+		83012D2521DB439800FE7DB5 /* AddNewFeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83012D2321DB439800FE7DB5 /* AddNewFeedViewController.xib */; };
+		83012D2721DB838400FE7DB5 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83012D2621DB838400FE7DB5 /* HUD.swift */; };
+		83012D2A21DB8A1F00FE7DB5 /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83012D2921DB8A1F00FE7DB5 /* FeedDetailViewController.swift */; };
 		832D822B21D4C90100A6232D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D822A21D4C90100A6232D /* AppDelegate.swift */; };
 		832D822D21D4C90100A6232D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D822C21D4C90100A6232D /* ViewController.swift */; };
 		832D823021D4C90100A6232D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832D822E21D4C90100A6232D /* Main.storyboard */; };
@@ -75,6 +80,11 @@
 		83012D1621DA2FB200FE7DB5 /* MainViewGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewGridLayout.swift; sourceTree = "<group>"; };
 		83012D1921DA341200FE7DB5 /* ChannelManageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelManageViewController.swift; sourceTree = "<group>"; };
 		83012D1C21DA348C00FE7DB5 /* ChannelManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelManagerViewModel.swift; sourceTree = "<group>"; };
+		83012D1F21DB387D00FE7DB5 /* SaveChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveChannelModel.swift; sourceTree = "<group>"; };
+		83012D2221DB439800FE7DB5 /* AddNewFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewFeedViewController.swift; sourceTree = "<group>"; };
+		83012D2321DB439800FE7DB5 /* AddNewFeedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNewFeedViewController.xib; sourceTree = "<group>"; };
+		83012D2621DB838400FE7DB5 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		83012D2921DB8A1F00FE7DB5 /* FeedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
 		832D822721D4C90100A6232D /* CompactRss.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompactRss.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		832D822A21D4C90100A6232D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		832D822C21D4C90100A6232D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +162,7 @@
 				83012D0E21DA250500FE7DB5 /* SettingPopoverViewController.swift */,
 				83012D1021DA253E00FE7DB5 /* SettingPopoverViewController.xib */,
 				83012D1221DA287C00FE7DB5 /* Preference.swift */,
+				83012D2621DB838400FE7DB5 /* HUD.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -179,6 +190,23 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		83012D2121DB438200FE7DB5 /* NewChannel */ = {
+			isa = PBXGroup;
+			children = (
+				83012D2221DB439800FE7DB5 /* AddNewFeedViewController.swift */,
+				83012D2321DB439800FE7DB5 /* AddNewFeedViewController.xib */,
+			);
+			path = NewChannel;
+			sourceTree = "<group>";
+		};
+		83012D2821DB8A0D00FE7DB5 /* FeedDetail */ = {
+			isa = PBXGroup;
+			children = (
+				83012D2921DB8A1F00FE7DB5 /* FeedDetailViewController.swift */,
+			);
+			path = FeedDetail;
 			sourceTree = "<group>";
 		};
 		832D821E21D4C90100A6232D = {
@@ -299,6 +327,7 @@
 				8372D4BC21D5BC5100936DCE /* RecommendFeed.swift */,
 				8372D4C721D5F9A200936DCE /* FeedPresentProtocol.swift */,
 				8372D4C921D60A0200936DCE /* Error.swift */,
+				83012D1F21DB387D00FE7DB5 /* SaveChannelModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -306,6 +335,8 @@
 		8372D4BE21D5C4BA00936DCE /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				83012D2821DB8A0D00FE7DB5 /* FeedDetail */,
+				83012D2121DB438200FE7DB5 /* NewChannel */,
 				83012D1821DA33E700FE7DB5 /* ChannelManage */,
 				8372D4C021D5C4D000936DCE /* Main */,
 			);
@@ -485,6 +516,7 @@
 				832D823221D4C90200A6232D /* Assets.xcassets in Resources */,
 				832D823021D4C90100A6232D /* Main.storyboard in Resources */,
 				8372D4B421D5B91D00936DCE /* Recommends.plist in Resources */,
+				83012D2521DB439800FE7DB5 /* AddNewFeedViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,9 +589,11 @@
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/FeedKit/FeedKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GDPerformanceView/GDPerformanceView.framework",
+				"${BUILT_PRODUCTS_DIR}/KafkaRefresh/KafkaRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/TinyConstraints/TinyConstraints.framework",
 				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
@@ -572,9 +606,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeedKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GDPerformanceView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KafkaRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TinyConstraints.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
@@ -598,6 +634,7 @@
 				83012D1521DA2F8F00FE7DB5 /* MainViewRowLayout.swift in Sources */,
 				83012D1A21DA341200FE7DB5 /* ChannelManageViewController.swift in Sources */,
 				8372D4B821D5B9C600936DCE /* RecommendManager.swift in Sources */,
+				83012D2421DB439800FE7DB5 /* AddNewFeedViewController.swift in Sources */,
 				8372D4C621D5D01500936DCE /* MainViewViewModel.swift in Sources */,
 				8372D4CA21D60A0200936DCE /* Error.swift in Sources */,
 				8372D4C821D5F9A200936DCE /* FeedPresentProtocol.swift in Sources */,
@@ -605,12 +642,15 @@
 				832D822B21D4C90100A6232D /* AppDelegate.swift in Sources */,
 				83012D1321DA287C00FE7DB5 /* Preference.swift in Sources */,
 				8372D4B021D5004A00936DCE /* ApplicationManager.swift in Sources */,
+				83012D2721DB838400FE7DB5 /* HUD.swift in Sources */,
 				8372D4B221D5B7EF00936DCE /* FeedManager.swift in Sources */,
 				8372D4AB21D4FF4B00936DCE /* ImageAssets.swift in Sources */,
 				83012D1D21DA348C00FE7DB5 /* ChannelManagerViewModel.swift in Sources */,
+				83012D2A21DB8A1F00FE7DB5 /* FeedDetailViewController.swift in Sources */,
 				83012D0F21DA250500FE7DB5 /* SettingPopoverViewController.swift in Sources */,
 				8372D4BD21D5BC5100936DCE /* RecommendFeed.swift in Sources */,
 				83012D1721DA2FB200FE7DB5 /* MainViewGridLayout.swift in Sources */,
+				83012D2021DB387D00FE7DB5 /* SaveChannelModel.swift in Sources */,
 				83012D0721D9EE9F00FE7DB5 /* UIImageView+CompactRss.swift in Sources */,
 				83012D0D21DA249100FE7DB5 /* BaseUIViewController.swift in Sources */,
 				8372D4AC21D4FF4B00936DCE /* StringAssets.swift in Sources */,

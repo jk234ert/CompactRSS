@@ -17,6 +17,8 @@ def session_pods
   #UI
   pod 'Kingfisher', '~> 5.0.0'
   pod 'TinyConstraints', '~> 3.3.1'
+  pod 'SVProgressHUD', '~> 2.2.5'
+  pod 'KafkaRefresh', '~> 1.2.3'
 
   #DEBUG
   pod 'XCGLogger', '~> 6.1.0'

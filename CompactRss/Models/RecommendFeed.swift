@@ -49,4 +49,8 @@ extension RecommendFeed: FeedChannelProtocol {
     var feedItems: [FeedItemProtocol] {
         return []
     }
+    
+    func getItems() -> [FeedItemProtocol] {
+        return []
+    }
 }

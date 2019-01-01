@@ -40,7 +40,7 @@
                         <segment title="Channel"/>
                         <segment title="Time"/>
                     </segments>
-                    <color key="tintColor" red="0.24185714129999999" green="0.17698898909999999" blue="0.123051472" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.24313725490196078" green="0.1764705882352941" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1o4-c7-Usi">
                     <rect key="frame" x="0.0" y="40" width="242" height="0.5"/>

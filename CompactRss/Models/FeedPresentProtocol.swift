@@ -15,7 +15,7 @@ protocol FeedChannelProtocol {
     var channelLink: String? { get }
     var pubDate: Date? { get }
     
-    var feedItems: [FeedItemProtocol] { get }
+    func getItems() -> [FeedItemProtocol]
 }
 
 protocol FeedItemProtocol {
@@ -23,10 +23,11 @@ protocol FeedItemProtocol {
     var imageUrl: String? { get }
     var pubDate: Date? { get }
     var description: String? { get }
+    var itemLink: String? { get }
 }
 
 extension RSSFeed: FeedChannelProtocol {
-    var feedItems: [FeedItemProtocol] {
+    func getItems() -> [FeedItemProtocol] {
         return items ?? []
     }
     
@@ -60,12 +61,16 @@ extension AtomFeed: FeedChannelProtocol {
         return links?.first?.attributes?.href ?? ""
     }
     
-    var feedItems: [FeedItemProtocol] {
+    func getItems() -> [FeedItemProtocol] {
         return entries ?? []
     }
 }
 
 extension RSSFeedItem: FeedItemProtocol {
+    var itemLink: String? {
+        return link
+    }
+    
     var itemTitle: String {
         return title ?? ""
     }
@@ -74,9 +79,15 @@ extension RSSFeedItem: FeedItemProtocol {
     var imageUrl: String? {
         return nil
     }
+    
+    
 }
 
 extension AtomFeedEntry: FeedItemProtocol {
+    var itemLink: String? {
+        return links?.first?.attributes?.href
+    }
+    
     var description: String? {
         return summary?.value ?? ""
     }
@@ -90,6 +101,6 @@ extension AtomFeedEntry: FeedItemProtocol {
     }
     
     var pubDate: Date? {
-        return published
+        return updated
     }
 }

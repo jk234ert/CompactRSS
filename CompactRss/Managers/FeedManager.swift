@@ -13,20 +13,28 @@ import PromiseKit
 class FeedManager {
     
     private static let savedFeedPlistName = "channels"
+    private static var savedChannelUrlString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].appendingPathComponent("channels.json")
     
-    class func loadRecommendFeeds() {
-        for recommend in RecommendManager.shared.recommends {
-            if let validLink = recommend.channelLink, let feedUrl = URL(string: validLink) {
-                let parser = FeedParser(URL: feedUrl)
-                parser.parseAsync { (result) in
-                    print("parsed")
-                }
-            }
-        }
-    }
+//    class func loadRecommendFeeds() {
+//        for recommend in RecommendManager.shared.recommends {
+//            if let validLink = recommend.channelLink, let feedUrl = URL(string: validLink) {
+//                let parser = FeedParser(URL: feedUrl)
+//                parser.parseAsync { (result) in
+//                    print("parsed")
+//                }
+//            }
+//        }
+//    }
     
     class func allChannels() -> [FeedChannelProtocol] {
-        return RecommendManager.shared.recommends
+        var channels = [FeedChannelProtocol]()
+        if Preference.firstTypeLaunch {
+            // Save recommends to local file at first launch
+            saveChannels(RecommendManager.shared.recommends)
+            Preference.firstTypeLaunch = false
+        }
+        channels.append(contentsOf: loadSavedChannels())
+        return channels
     }
     
     class func fetchFeed(channel: FeedChannelProtocol) -> Promise<FeedChannelProtocol> {
@@ -50,24 +58,60 @@ class FeedManager {
         }
     }
     
+    
+    
     class func fetchFeeds(channels: [FeedChannelProtocol]) -> [Promise<FeedChannelProtocol>] {
         return channels.map { fetchFeed(channel: $0) }
+    }
+    
+    class func fetchFeed(url: String) -> Promise<FeedChannelProtocol> {
+        return Promise { seal in
+            guard let validUrl = URL(string: url) else {
+                seal.reject(FeedMetaInfoError.invalidUrl(url: url))
+                return
+            }
+            let parser = FeedParser(URL: validUrl)
+            parser.parseAsync { (result) in
+                if result.isFailure {
+                    seal.reject(result.error ?? FeedMetaInfoError.invalidUrl(url: url))
+                }
+                if let rssFeed = result.rssFeed {
+                    seal.resolve(rssFeed, result.error)
+                } else if let atomFeed = result.atomFeed {
+                    seal.resolve(atomFeed, result.error)
+                } else if let jsonFeed = result.jsonFeed {
+                    
+                } else {
+                    seal.reject(FeedMetaInfoError.invalidUrl(url: url))
+                }
+            }
+        }
     }
 }
 
 extension FeedManager {
     class func loadSavedChannels() -> [FeedChannelProtocol] {
-        guard let url = Bundle(for: FeedManager.self).url(forResource: savedFeedPlistName, withExtension: "plist") else {
-            return []
-        }
-        if let list = NSArray(contentsOf: url) as? [FeedChannelProtocol] {
-            return list
-        } else {
+        do {
+            let url = URL(fileURLWithPath: savedChannelUrlString)
+            let savedChannels = try JSONDecoder().decode([SaveChannelModel].self, from: Data(contentsOf: url))
+            return savedChannels
+        } catch let error {
+            logger.error("Fail to load channels, error: \(error.localizedDescription)")
             return []
         }
     }
     
     class func saveChannels(_ feeds: [FeedChannelProtocol]) {
+        let toSaveChannels = feeds.map { SaveChannelModel(channelTitle: $0.channelTitle,
+                                                          imageUrl: $0.imageUrl,
+                                                          channelLink: $0.channelLink,
+                                                          pubDate: $0.pubDate) }
+        do {
+            let url = URL(fileURLWithPath: savedChannelUrlString)
+            try JSONEncoder().encode(toSaveChannels).write(to: url)
+        } catch let error {
+            logger.error("Fail to save channels, error: \(error.localizedDescription)")
+        }
         
     }
 }

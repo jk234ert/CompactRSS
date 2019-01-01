@@ -26,6 +26,7 @@ extension UserDefaults {
 }
 
 struct Preference {
+    
     enum SortType: Int {
         case channel
         case time
@@ -34,6 +35,11 @@ struct Preference {
     enum ViewByType: Int {
         case row
         case grid
+    }
+    
+    static var firstTypeLaunch: Bool {
+        get { return UserDefaults.standard[#function] ?? true }
+        set { UserDefaults.standard[#function] = newValue }
     }
     
     static var sortType: SortType {

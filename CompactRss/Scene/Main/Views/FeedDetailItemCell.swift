@@ -36,6 +36,16 @@ class FeedDetailItemCell: UICollectionViewCell {
         tagLabel.text = feedItem?.pubDate?.timeAgoSinceNow
     }
     
+    override var isSelected: Bool {
+        didSet {
+            updateBackgroundColor()
+        }
+    }
+    
+    private func updateBackgroundColor() {
+        backgroundColor = isSelected ? UIColor(hex: 0x3E2D1F) : .white
+    }
+    
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let autoLayoutAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
         let width = Preference.viewByType == .row ? SwifterSwift.screenWidth : SwifterSwift.screenWidth / 2.0

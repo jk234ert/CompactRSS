@@ -13,20 +13,28 @@ class ViewController: UIViewController {
     @IBOutlet weak var feedsCollectionView: UICollectionView!
     
     var viewModel: MainViewViewModel?
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setSettingBarButtonItem()
-        viewModel = MainViewViewModel(collectionView: feedsCollectionView)
+        viewModel = MainViewViewModel(collectionView: feedsCollectionView, viewController: self)
         feedsCollectionView.dataSource = viewModel
         feedsCollectionView.delegate = viewModel
         
         viewModel?.loadLatestFeeds()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.refreshIfNeeded()
+    }
 
     private func setSettingBarButtonItem() {
-        let settingBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showMainSetting(sender:)))
-        navigationItem.leftBarButtonItem = settingBarButtonItem
+        //Not implemented
+//        let settingBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showMainSetting(sender:)))
+//        navigationItem.leftBarButtonItem = settingBarButtonItem
         
         let manageBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(showChannelManageView(sender:)))
         navigationItem.rightBarButtonItem = manageBarButtonItem
