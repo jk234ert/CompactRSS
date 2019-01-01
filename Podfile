@@ -12,7 +12,8 @@ def session_pods
   pod 'PromiseKit', '~> 6.7.0'
   pod 'SwifterSwift', '~> 4.6.0'
   pod 'SwiftGen', '~> 6.0.2'
-
+  pod 'DateToolsSwift', '~> 4.0.0'
+  
   #UI
   pod 'Kingfisher', '~> 5.0.0'
   pod 'TinyConstraints', '~> 3.3.1'

@@ -12,7 +12,42 @@ import PromiseKit
 
 class MainViewViewModel: NSObject {
     
-    var feeds: [FeedItemProtocol] = [FeedItemProtocol]()
+    enum DisplayMode {
+        case byChannel, byTime
+        
+        func getSectionCount(feeds: [FeedChannelProtocol]) -> Int {
+            switch self {
+            case .byChannel:
+                return feeds.count
+            case .byTime:
+                return 1
+            }
+        }
+        
+        func getNumberOfItemsInSection(feeds: [FeedChannelProtocol], section: Int) -> Int {
+            switch self {
+            case .byChannel:
+                return feeds[section].feedItems.count
+            case .byTime:
+                return 1
+            }
+        }
+        
+        func getFeedChannel(feeds: [FeedChannelProtocol], section: Int) -> FeedChannelProtocol {
+            return feeds[section]
+        }
+        
+        func getFeedItem(feeds: [FeedChannelProtocol],
+                         indexPath: IndexPath) -> FeedItemProtocol {
+            return feeds[indexPath.section].feedItems[indexPath.row]
+        }
+    }
+    
+    var feeds: [FeedChannelProtocol] = [FeedChannelProtocol]()
+    
+    var feedItems: [FeedItemProtocol] = [FeedItemProtocol]()
+    
+    var displayMode: DisplayMode = .byChannel
     
     var layoutManager: MainViewCollectionLayoutManager?
    
@@ -23,25 +58,51 @@ class MainViewViewModel: NSObject {
     
     func loadLatestFeeds() {
         let channels = FeedManager.allChannels()
-        firstly {
-            FeedManager.fetchFeeds(channels: channels)
-            }.done(on: DispatchQueue.main) { [weak self] (items) in
-                self?.feeds.append(contentsOf: items)
+        when(resolved: FeedManager.fetchFeeds(channels: channels))
+            .done(on: DispatchQueue.main)  { [weak self] (results) in
+                for result in results {
+                    switch result {
+                    case .rejected(let error):
+                        logger.error("Fail to fetch feed, error: \(error.localizedDescription)")
+                    case .fulfilled(let channel):
+                        self?.feeds.append(channel)
+                    }
+                }
+                self?.feeds.sort(by: { (channel1, channel2) -> Bool in
+                    return channel1.pubDate ?> channel2.pubDate
+                })
                 self?.layoutManager?.collectionView?.reloadData()
-            }.catch { (error) in
+            }
+            .catch { error in
                 logger.error("Fail to fetch feeds, underlay error: \(error.localizedDescription)")
         }
+    }
+    
+    func sortData() {
+        
+    }
+    
+    func switchLayout() {
+        layoutManager?.switchLayout()
     }
 }
 
 extension MainViewViewModel: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return displayMode.getSectionCount(feeds: feeds)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return feeds.count
+        return displayMode.getNumberOfItemsInSection(feeds: feeds, section: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withClass: FeedItemCell.self, for: indexPath)
-        cell.feedItem = feeds[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withClass: FeedDetailItemCell.self, for: indexPath)
+        let feedItem = displayMode.getFeedItem(feeds: feeds, indexPath: indexPath)
+        let channel = displayMode.getFeedChannel(feeds: feeds, section: indexPath.section)
+        cell.feedItem = feedItem
+        cell.channelTitleLabel.text = "#" + (channel.channelTitle ?? "")
         return cell
     }
 }

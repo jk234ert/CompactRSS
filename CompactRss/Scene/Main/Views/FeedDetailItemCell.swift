@@ -1,19 +1,21 @@
 //
-//  FeedItemCell.swift
+//  FeedDetailItemCell.swift
 //  CompactRss
 //
-//  Created by jk234ert on 2018/12/28.
+//  Created by jk234ert on 2018/12/31.
 //  Copyright © 2018 Brad. All rights reserved.
 //
 
-import UIKit
 import SwifterSwift
+import DateToolsSwift
 
-class FeedItemCell: UICollectionViewCell {
+class FeedDetailItemCell: UICollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     
-    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var descLabel: UILabel!
+    
+    @IBOutlet weak var channelTitleLabel: UILabel!
     
     @IBOutlet weak var tagLabel: UILabel!
     
@@ -30,26 +32,17 @@ class FeedItemCell: UICollectionViewCell {
     
     private func updateAppearance() {
         titleLabel.text = feedItem?.itemTitle
-        
-        #warning("update tag later")
-        tagLabel.text = "#Tech"
-        
-        
-        
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        titleLabel.setNeedsDisplay()
+        descLabel.text = feedItem?.description
+        tagLabel.text = feedItem?.pubDate?.timeAgoSinceNow
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let autoLayoutAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
-        let targetSize = CGSize(width: SwifterSwift.screenWidth, height: 0)
+        let width = Preference.viewByType == .row ? SwifterSwift.screenWidth : SwifterSwift.screenWidth / 2.0
+        let targetSize = CGSize(width: width, height: 0)
         let autoLayoutSize = contentView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: UILayoutPriority.required, verticalFittingPriority: UILayoutPriority.defaultLow)
         let autoLayoutFrame = CGRect(origin: autoLayoutAttributes.frame.origin, size: autoLayoutSize)
         autoLayoutAttributes.frame = autoLayoutFrame
         return autoLayoutAttributes
     }
-
 }

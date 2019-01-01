@@ -9,8 +9,8 @@
 import Foundation
 
 struct RecommendFeed {
-    let title: String
-    let link: String
+    let channelTitle: String?
+    let channelLink: String?
     let category: String?
     let description: String?
     
@@ -21,8 +21,8 @@ struct RecommendFeed {
         guard let link = dict["link"] as? String else {
             return nil
         }
-        self.title = title
-        self.link = link
+        self.channelTitle = title
+        self.channelLink = link
         if let category = dict["category"] as? String {
             self.category = category
         } else {
@@ -37,7 +37,16 @@ struct RecommendFeed {
 }
 
 extension RecommendFeed: FeedChannelProtocol {
+    var pubDate: Date? {
+        return nil
+    }
+    
+    
     var imageUrl: String? {
         return nil
+    }
+    
+    var feedItems: [FeedItemProtocol] {
+        return []
     }
 }
